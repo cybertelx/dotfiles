@@ -122,8 +122,8 @@ gh auth login
 gh auth setup-git
 
 # git set email & user
-git config user.name "cybertelx"
-git config user.email "cybertelx@protonmail.com"
+git config --global user.name "cybertelx"
+git config --global user.email "cybertelx@protonmail.com"
 
 echo "$(tput setaf 2)you should be good to go."
 echo "$(tput setaf 3)things to set up:"
