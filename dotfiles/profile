@@ -33,5 +33,3 @@ fi
   #  fi
    # [ -f "$DOTFILE" ] && source "$DOTFILE"
 #done
-
-source "$BASH_IT"/bash_it.sh
