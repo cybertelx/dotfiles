@@ -46,7 +46,7 @@ else
     # Install Bash-It
     git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
     
-    ~/.bash_it/install.sh -f --silent --append-to-config
+    ~/.bash_it/install.sh -f --silent --no-modify-config
 fi
 
 # Install programs: VSCodium, Brave, etc.
@@ -130,4 +130,4 @@ echo "$(tput setaf 3) - make new gpg/ssh keys"
 echo "$(tput setaf 3) - make desktop look cool"
 echo "$(tput setaf 3) - install other apps"
 echo "$(tput setaf 6)install these dotfiles in the future with this command:"
-echo "$(tput setaf 3)git clone git@github.com:cybertelx/dotfiles ~/.dotfiles && chmod +x ~/.dotfiles/install.sh && ~/.dotfiles/install.sh"
+echo "$(tput setaf 3)git clone https://github.com/cybertelx/dotfiles ~/.dotfiles && chmod +x ~/.dotfiles/install.sh && ~/.dotfiles/install.sh"
