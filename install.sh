@@ -71,7 +71,6 @@ sudo apt update && sudo apt install -y codium apt-transport-https curl brave-bro
 codium_extensions=(
     astro-build.astro-vscode
     bradlc.vscode-tailwindcss
-    denoland.vscode-deno
     eamodio.gitlens
     esbenp.prettier-vscode
     felipecaputo.git-project-manager
