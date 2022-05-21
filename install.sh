@@ -117,6 +117,14 @@ do
     codium --install-extension $i
 done
 
+# github authentication
+gh auth login
+gh auth setup-git
+
+# git set email & user
+git config user.name "cybertelx"
+git config user.email "cybertelx@protonmail.com"
+
 echo "$(tput setaf 2)you should be good to go."
 echo "$(tput setaf 3)things to set up:"
 echo "$(tput setaf 3) - configure the extensions with password & stuff"
