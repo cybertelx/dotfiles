@@ -7,17 +7,22 @@ please() {
 
 fucking() {
     echo "Fine, you little shit."
-    /usr/bin/sudo -p "[fucking] shut the fuck up and say your password: " "$@"
+    /usr/bin/sudo -p "[fucking] shut the fuck up and say the $USER password:" "$@"
 }
 
 just() {
     echo "Yes, I'll do it."
-    /usr/bin/sudo -p "[just] give your password you fucker: " "$@"
+    /usr/bin/sudo -p "[just] give your ($USER) password you fucker:" "$@"
 }
 
 argh() {
     echo "Stop being so pissed, you little shit."
-    /usr/bin/sudo -p "[argh] say your password you shit: " "$@"
+    /usr/bin/sudo -p "[argh] say your password, $USER, you shit:" "$@"
+}
+
+sudo() {
+    echo "Fun fact: It's su-DOOO, not su-DOH."
+    /usr/bin/sudo -p "[sudo] (say it correctly) password for $USER:" "$@"
 }
 
 # the many variations of AAAARGH
