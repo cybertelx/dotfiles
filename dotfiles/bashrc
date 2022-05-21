@@ -84,3 +84,7 @@ export SCM_CHECK=true
 
 # Load Bash It
 source "$BASH_IT"/bash_it.sh
+
+# fnm
+export PATH=/home/rotarepo/.fnm:$PATH
+eval "`fnm env`"

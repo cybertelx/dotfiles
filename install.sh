@@ -29,7 +29,7 @@ done
 for i in "${!custom_path_dotfiles[@]}"
 do
     mkdir -p ${custom_path_dotfiles[$i]}
-    ln -nsfr dotfiles/$i ${custom_path_dotfiles[$i]}
+    ln -nsfr $HOME/.dotfiles/dotfiles/$i ${custom_path_dotfiles[$i]}
 done
 
 # Bash-It framework
@@ -54,6 +54,12 @@ fi
 
 # Install programs: VSCodium, Brave, etc.
 
+sudo apt install python3 python3-pip aptitude gh
+pip3 install slither-analyzer
+
+# FNM node
+curl -fsSL https://fnm.vercel.app/install | bash
+
 # codium
 wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
 | gpg --dearmor \
@@ -68,6 +74,12 @@ sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://b
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 
 sudo apt update && sudo apt install -y codium apt-transport-https curl brave-browser
+
+# github cli
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update
+sudo apt install gh
 
 # install codium extensions
 
@@ -105,31 +117,12 @@ do
     codium --install-extension $i
 done
 
-# install brave extensions
-brave_extensions=(
-    acmacodkjbdgmoleebolmdjonilkdbch
-    gphhapmejobijbbhgpjhcjognlahblep
-    nngceckbapebfimnlniiiahkandclblb
-    ppdbpfcdhihjnlmmafijphgpnebfadko
-)
-
-# make it if it dont exist
-BRAVE_EXTENSION_PATH=~/.config/BraveSoftware/Brave-Browser/Default/Extensions
-mkdir -p $BRAVE_EXTENSION_PATH
-
-for i in "${brave_extensions[@]}"
-do
-    # hope no programs are using it in the meantime
-    rm $BRAVE_EXTENSION_PATH/$i.json > /dev/null
-    # automagically add a dot before it
-    ln -s $HOME/.dotfiles/brave-extensions/$i.json $BRAVE_EXTENSION_PATH/$i.json
-done
-
 echo "$(tput setaf 2)you should be good to go."
 echo "$(tput setaf 3)things to set up:"
 echo "$(tput setaf 3) - configure the extensions with password & stuff"
 echo "$(tput setaf 3) - make new gpg/ssh keys"
 echo "$(tput setaf 3) - make desktop look cool"
 echo "$(tput setaf 3) - install other apps"
+echo "$(tput setaf 3) - sync brave"
 echo "$(tput setaf 6)install these dotfiles in the future with this command:"
 echo "$(tput setaf 3)git clone https://github.com/cybertelx/dotfiles ~/.dotfiles && chmod +x ~/.dotfiles/install.sh && ~/.dotfiles/install.sh"
