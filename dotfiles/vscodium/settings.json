@@ -2,5 +2,6 @@
   "editor.formatOnSave": true,
   "terminal.integrated.defaultProfile.linux": "bash",
   "git.enableSmartCommit": true,
-  "git.confirmSync": false
+  "git.confirmSync": false,
+  "git.autofetch": true
 }
