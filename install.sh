@@ -4,6 +4,9 @@
 # set up symlinks,
 # etc etc.
 
+# Try to get wget, curl, etc.
+sudo apt-get install curl wget git
+
 declare -A custom_path_dotfiles
 
 dotfiles=(
