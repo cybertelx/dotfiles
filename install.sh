@@ -14,7 +14,7 @@ dotfiles=(
 )
 
 custom_path_dotfiles=(
-    ["vscodium/settings.json"]="$HOME/.config/VSCodium/User",
+    ["vscodium/settings.json"]="$HOME/.config/VSCodium/User"
     ["vscodium/product.json"]="$HOME/.config/VSCodium"
 )
 
@@ -23,7 +23,7 @@ do
     # hope no programs are using it in the meantime
     rm $HOME/.$i > /dev/null
     # automagically add a dot before it
-    ln -s $HOME/.dotfiles/dotfiles/$i ~/.$i
+    ln -s $HOME/.dotfiles/dotfiles/$i $HOME/.$i
 done
 
 for i in "${!custom_path_dotfiles[@]}"
