@@ -33,3 +33,5 @@ fi
   #  fi
    # [ -f "$DOTFILE" ] && source "$DOTFILE"
 #done
+
+. "$HOME/.cargo/env"

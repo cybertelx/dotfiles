@@ -86,5 +86,11 @@ export SCM_CHECK=true
 source "$BASH_IT"/bash_it.sh
 
 # fnm
-export PATH=/home/rotarepo/.fnm:$PATH
+export PATH=~/.fnm:$PATH
 eval "`fnm env`"
+
+eval "$(thefuck --alias)"
+
+# bin
+export PATH=~/bin:$PATH
+. "$HOME/.cargo/env"
