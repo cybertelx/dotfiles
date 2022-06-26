@@ -4,8 +4,7 @@
 # set up symlinks,
 # etc etc.
 
-# Try to get wget, curl, etc.
-sudo apt-get install curl wget git
+sudo apt-get install -y curl wget git apt
 
 declare -A custom_path_dotfiles
 
@@ -21,22 +20,22 @@ custom_path_dotfiles=(
 for i in "${dotfiles[@]}"
 do
     # hope no programs are using it in the meantime
-    rm $HOME/.$i > /dev/null
+    rm "$HOME"/."$i" > /dev/null
     # automagically add a dot before it
-    ln -s $HOME/.dotfiles/dotfiles/$i $HOME/.$i
+    ln -s "$HOME"/.dotfiles/dotfiles/"$i" "$HOME"/."$i"
 done
 
 for i in "${!custom_path_dotfiles[@]}"
 do
-    mkdir -p ${custom_path_dotfiles[$i]}
-    ln -nsfr $HOME/.dotfiles/dotfiles/$i ${custom_path_dotfiles[$i]}
+    mkdir -p "${custom_path_dotfiles[$i]}"
+    ln -nsfr "$HOME"/.dotfiles/dotfiles/"$i" "${custom_path_dotfiles[$i]}"
 done
 
 # Bash-It framework
 
 # Symlink bash-it extensions
-rm $HOME/.bash_it_scripts > /dev/null
-ln -nsfr dotfiles/bash-it $HOME/.bash_it_scripts
+rm "$HOME"/.bash_it_scripts > /dev/null
+ln -nsfr dotfiles/bash-it "$HOME"/.bash_it_scripts
 
 # Update/install bash-it
 if [ -d "$HOME/.bash_it" ]
@@ -54,32 +53,28 @@ fi
 
 # Install programs: VSCodium, Brave, etc.
 
-sudo apt install python3 python3-pip aptitude gh
-pip3 install slither-analyzer
-
-# FNM node
+# FNM nodejs
 curl -fsSL https://fnm.vercel.app/install | bash
 
 # codium
 wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
 | gpg --dearmor \
 | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
-
 echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
 | sudo tee /etc/apt/sources.list.d/vscodium.list
 
 # brave
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-
-sudo apt update && sudo apt install -y codium apt-transport-https curl brave-browser
 
 # github cli
 curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+
 sudo apt update
-sudo apt install gh
+
+sudo apt install -y gh codium apt-transport-https curl brave-browser python3 python3-pip aptitude flatpak
+pip3 install slither-analyzer
 
 # install codium extensions
 
@@ -101,6 +96,7 @@ codium_extensions=(
     shakram02.bash-beautify
     silvenon.mdx
     steoates.autoimport
+    dbaeumer.vscode-eslint
     tintinweb.graphviz-interactive-preview
     tintinweb.solidity-visual-auditor
     tintinweb.vscode-ethover
@@ -108,13 +104,18 @@ codium_extensions=(
     tintinweb.vscode-solidity-flattener
     tintinweb.vscode-solidity-language
     tomoki1207.pdf
+    oderwat.indent-rainbow
+    IgorSbitnev.error-gutters
+    planbcoding.vscode-react-refactor
+    usernamehw.errorlens
     trailofbits.slither-vscode
     xyc.vscode-mdx-preview
+    timonwong.shellcheck
 )
 
 for i in "${codium_extensions[@]}"
 do
-    codium --install-extension $i
+    codium --install-extension "$i"
 done
 
 # github authentication
