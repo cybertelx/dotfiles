@@ -94,3 +94,7 @@ eval "$(thefuck --alias)"
 # bin
 export PATH=~/bin:$PATH
 . "$HOME/.cargo/env"
+
+# fnm
+export PATH=/home/rotarepo/.fnm:$PATH
+eval "`fnm env`"

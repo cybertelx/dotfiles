@@ -26,12 +26,13 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-#for DOTFILE in `find ~/.dotfiles/run-on-start`
-#do
-#    if [(basename "$DOTFILE") = "README.md"]; then
- #       continue
-  #  fi
-   # [ -f "$DOTFILE" ] && source "$DOTFILE"
-#done
+while IFS= read -r -d '' DOTFILE
+do
+  (( count++ ))
+  if [ "$(basename $DOTFILE)" != "README.md" ]
+  then
+    [ -f "$DOTFILE" ] && source "$DOTFILE"
+  fi
+done < <(find ~/.dotfiles/run-on-start -print0)
 
 . "$HOME/.cargo/env"
