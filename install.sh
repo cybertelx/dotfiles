@@ -34,7 +34,7 @@ do
     # hope no programs are using it in the meantime
     rm "$HOME/.$i" > /dev/null
     # automagically add a dot before it
-    cp "$HOME/.dotfiles/dotfiles/$i" "$HOME/.$i"
+    cp "$HOME/.dotfiles/defaults/$i" "$HOME/.$i"
 done
 
 for i in "${!custom_path_dotfiles[@]}"
@@ -75,10 +75,10 @@ sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.co
 sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
 # github cli
-sudo dnf install 'dnf-command(config-manager)'
+sudo dnf install -y 'dnf-command(config-manager)'
 sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
 
-sudo dnf install gh brave-browser codium python3.11 python3-pip flatpak
+sudo dnf install -y gh brave-browser codium python3.11 python3-pip flatpak
 pip3 install slither-analyzer
 
 # install codium extensions
