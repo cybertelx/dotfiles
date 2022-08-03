@@ -1,10 +1,10 @@
 #!/bin/bash -i
+# Now for Fedora
 
-# Install all the dotfiles,
-# set up symlinks,
-# etc etc.
+sudo dnf install -y dnf-plugins-core curl wget git-all
 
-sudo apt-get install -y curl wget git apt
+# download repo from git
+git clone https://github.com/cybertelx/dotfiles.git "$HOME/.dotfiles"
 
 declare -A custom_path_dotfiles
 
@@ -24,23 +24,23 @@ custom_path_dotfiles=(
 for i in "${dotfiles[@]}"
 do
     # hope no programs are using it in the meantime
-    rm "$HOME"/."$i" > /dev/null
+    rm "$HOME/.$i" > /dev/null
     # automagically add a dot before it
-    ln -s "$HOME"/.dotfiles/dotfiles/"$i" "$HOME"/."$i"
+    ln -s "$HOME/.dotfiles/dotfiles/$i" "$HOME"/."$i"
 done
 
 for i in "${defaults[@]}"
 do
     # hope no programs are using it in the meantime
-    rm "$HOME"/."$i" > /dev/null
+    rm "$HOME/.$i" > /dev/null
     # automagically add a dot before it
-    cp "$HOME"/.dotfiles/dotfiles/"$i" "$HOME"/."$i"
+    cp "$HOME/.dotfiles/dotfiles/$i" "$HOME/.$i"
 done
 
 for i in "${!custom_path_dotfiles[@]}"
 do
     mkdir -p "${custom_path_dotfiles[$i]}"
-    ln -nsfr "$HOME"/.dotfiles/dotfiles/"$i" "${custom_path_dotfiles[$i]}"
+    ln -nsfr "$HOME/.dotfiles/dotfiles/$i" "${custom_path_dotfiles[$i]}"
 done
 
 # Bash-It framework
@@ -52,8 +52,6 @@ ln -nsfr dotfiles/bash-it "$HOME"/.bash_it_scripts
 # Update/install bash-it
 if [ -d "$HOME/.bash_it" ]
 then
-    # I like to live on the edge
-    # Dev update brrrrrrrrrrrrrrr
     bash-it update dev --silent
 else
     echo "bash-it could not be found, performing installation"
@@ -69,23 +67,18 @@ fi
 curl -fsSL https://fnm.vercel.app/install | bash
 
 # codium
-wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
-| gpg --dearmor \
-| sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
-echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
-| sudo tee /etc/apt/sources.list.d/vscodium.list
+sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h" | sudo tee -a /etc/yum.repos.d/vscodium.repo
 
 # brave
-sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
+sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
 # github cli
-curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo dnf install 'dnf-command(config-manager)'
+sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
 
-sudo apt update
-
-sudo apt install -y gh codium apt-transport-https curl brave-browser python3 python3-pip aptitude flatpak
+sudo dnf install gh brave-browser codium python3.11 python3-pip flatpak
 pip3 install slither-analyzer
 
 # install codium extensions
@@ -146,4 +139,4 @@ echo "$(tput setaf 3) - make desktop look cool"
 echo "$(tput setaf 3) - install other apps"
 echo "$(tput setaf 3) - sync brave"
 echo "$(tput setaf 6)install these dotfiles in the future with this command:"
-echo "$(tput setaf 3)git clone https://github.com/cybertelx/dotfiles ~/.dotfiles && chmod +x ~/.dotfiles/install.sh && ~/.dotfiles/install.sh"
+echo "$(tput setaf 3)curl https://raw.githubusercontent.com/cybertelx/dotfiles/master/install.sh | sudo bash"
