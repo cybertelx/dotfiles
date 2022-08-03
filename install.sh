@@ -9,7 +9,11 @@ sudo apt-get install -y curl wget git apt
 declare -A custom_path_dotfiles
 
 dotfiles=(
-    profile bashrc bash_logout
+    bash_logout
+)
+
+defaults=(
+    profile bashrc
 )
 
 custom_path_dotfiles=(
@@ -23,6 +27,14 @@ do
     rm "$HOME"/."$i" > /dev/null
     # automagically add a dot before it
     ln -s "$HOME"/.dotfiles/dotfiles/"$i" "$HOME"/."$i"
+done
+
+for i in "${defaults[@]}"
+do
+    # hope no programs are using it in the meantime
+    rm "$HOME"/."$i" > /dev/null
+    # automagically add a dot before it
+    cp "$HOME"/.dotfiles/dotfiles/"$i" "$HOME"/."$i"
 done
 
 for i in "${!custom_path_dotfiles[@]}"

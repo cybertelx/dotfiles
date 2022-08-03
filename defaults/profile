@@ -28,11 +28,9 @@ fi
 
 while IFS= read -r -d '' DOTFILE
 do
-  (( count++ ))
-  if [ "$(basename $DOTFILE)" != "README.md" ]
-  then
-    [ -f "$DOTFILE" ] && source "$DOTFILE"
-  fi
+    (( count++ ))
+    if [ "$(basename $DOTFILE)" != "README.md" ]
+    then
+        [ -f "$DOTFILE" ] && source "$DOTFILE"
+    fi
 done < <(find ~/.dotfiles/run-on-start -print0)
-
-. "$HOME/.cargo/env"
